@@ -86,10 +86,13 @@
         resourceBundle = classBundle;
     }
     
+    NSString* languageCode = NSLocale.currentLocale.languageCode;
+    NSString *path = [resourceBundle pathForResource:languageCode ofType:@"lproj"];
+    
     _doneTextButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_doneTextButton setTitle:NSLocalizedStringFromTableInBundle(@"Done",
                                                                  @"TOCropViewControllerLocalizable",
-                                                                 resourceBundle,
+                                                                 [NSBundle bundleWithPath:path],
                                                                  nil)
                      forState:UIControlStateNormal];
     [_doneTextButton setTitleColor:[UIColor colorWithRed:1.0f green:0.8f blue:0.0f alpha:1.0f] forState:UIControlStateNormal];
@@ -106,7 +109,7 @@
     _cancelTextButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_cancelTextButton setTitle:NSLocalizedStringFromTableInBundle(@"Cancel",
                                                                    @"TOCropViewControllerLocalizable",
-                                                                   resourceBundle,
+                                                                   [NSBundle bundleWithPath:path],
                                                                    nil)
                        forState:UIControlStateNormal];
     [_cancelTextButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
