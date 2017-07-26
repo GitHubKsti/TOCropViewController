@@ -103,12 +103,6 @@
     [super viewDidLoad];
 
     BOOL circularMode = (self.croppingStyle == TOCropViewCroppingStyleCircular);
-
-    self.cropView.frame = [self frameForCropViewWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
-    [self.view addSubview:self.cropView];
-    
-    self.toolbar.frame = [self frameForToolBarWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
-    [self.view addSubview:self.toolbar];
     
     __weak typeof(self) weakSelf = self;
     self.toolbar.doneButtonTapped =     ^{ [weakSelf doneButtonTapped]; };
@@ -182,6 +176,22 @@
         [self.navigationController setNavigationBarHidden:self.navigationBarHidden animated:animated];
         [self.navigationController setToolbarHidden:self.toolbarHidden animated:animated];
     }
+}
+
+- (void)viewWillLayoutSubviews
+{
+    static BOOL first = true;
+    if(first)
+    {
+        first = false;
+        //add the subviews here because the view bounds are not fixed before that call. This is only important by using a formsheet
+        self.cropView.frame = [self frameForCropViewWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
+        [self.view addSubview:self.cropView];
+        
+        self.toolbar.frame = [self frameForToolBarWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
+        [self.view addSubview:self.toolbar];
+    }
+    [super viewWillLayoutSubviews];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
