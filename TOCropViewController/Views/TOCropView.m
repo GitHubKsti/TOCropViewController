@@ -260,9 +260,9 @@ typedef NS_ENUM(NSInteger, TOCropViewOverlayEdge) {
 }
 
 #pragma mark - View Layout -
-- (void)didMoveToSuperview
+- (void)layoutSubviews
 {
-    [super didMoveToSuperview];
+    [super layoutSubviews];
     
     //Since this also gets called when getting removed from the superview
     if (self.superview == nil) {

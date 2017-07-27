@@ -102,6 +102,12 @@
 {
     [super viewDidLoad];
 
+    self.cropView.frame = [self frameForCropViewWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
+    [self.view addSubview:self.cropView];
+
+    self.toolbar.frame = [self frameForToolBarWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
+    [self.view addSubview:self.toolbar];
+
     BOOL circularMode = (self.croppingStyle == TOCropViewCroppingStyleCircular);
     
     __weak typeof(self) weakSelf = self;
@@ -181,15 +187,6 @@
 - (void)viewWillLayoutSubviews
 {
     //add the subviews here because the view bounds are not fixed before that call. This is only important by using a formsheet
-    if (self.cropView.superview == nil) {
-        self.cropView.frame = [self frameForCropViewWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
-        [self.view addSubview:self.cropView];
-    }
-    if (self.toolbar.superview == nil)
-    {
-        self.toolbar.frame = [self frameForToolBarWithVerticalLayout:CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds)];
-        [self.view addSubview:self.toolbar];
-    }
     [super viewWillLayoutSubviews];
 }
 
